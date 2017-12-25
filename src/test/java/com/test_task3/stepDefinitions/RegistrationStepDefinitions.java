@@ -17,6 +17,7 @@ public class RegistrationStepDefinitions {
     @When("^User navigates to Sign Up Page$")
     public void userNavigatesToSignUpPage() throws Throwable {
         getDriver().get("https://github.com/join");
+        getDriver().manage().window().maximize();
         Assert.assertEquals(getDriver().getCurrentUrl(), "https://github.com/join");
     }
 
@@ -29,9 +30,13 @@ public class RegistrationStepDefinitions {
     @When("^User enters Valid Data to Sign Up Fields$")
     public void userEntersValidDataToSignUpFields() throws Throwable {
         SignUpPage sign = new SignUpPage();
+        Thread.sleep(3000);
         sign.fillUserName(getRandomString());
+        Thread.sleep(3000);
         sign.fillEmail(getRandomString() + "@gmail.com");
+        Thread.sleep(3000);
         sign.fillPassword(getRandomString());
+        Thread.sleep(3000);
     }
 
     @And("^Press the Create an account button$")
@@ -43,19 +48,39 @@ public class RegistrationStepDefinitions {
     @Then("^Welcome Message \"([^\"]*)\" is Displayed$")
     public void welcomeMessageIsDisplayed(String welcomeMessage) throws Throwable {
         PlanPage planPage = new PlanPage();
-        Assert.assertEquals(planPage.getGreetingMessage(), welcomeMessage);
+        Assert.assertEquals(welcomeMessage, planPage.getGreetingMessage());
     }
 
-    @When("^User enters Invalid Password to Sign Up Fields$")
-    public void userEntersInvalidDataToSignUpFields(List<InvalidPassword> invalidPass) throws Throwable {
+    @And("^User enters Invalid Password to Sign Up Field$")
+    public void userEntersInvalidPassToSignUpField(List<InvalidData> invalidPass) throws Throwable {
         SignUpPage sign = new SignUpPage();
-        for (InvalidPassword pass : invalidPass) {
-            Thread.sleep(1000);
-            sign.fillUserName(pass.getValue());
-            Thread.sleep(1000);
-            Assert.assertEquals(pass.getError(), sign.getSingleError());
-            sign.clearFields();
-            Thread.sleep(1000);
+        for (InvalidData pass : invalidPass) {
+            sign.fillPassword(pass.getValue());
+            Assert.assertEquals(pass.getError(), sign.getFieldError("password"));
         }
+    }
+
+    @And("^User enters Invalid Email to Sign Up Field$")
+    public void userEntersInvalidEmailToSignUpField(List<InvalidData> invalidMail) throws Throwable {
+        SignUpPage sign = new SignUpPage();
+        for (InvalidData mail : invalidMail) {
+            sign.fillEmail(mail.getValue());
+            Assert.assertEquals(mail.getError(), sign.getFieldError("email"));
+        }
+    }
+
+    @When("^User enters Invalid Username to Sign Up Field$")
+    public void userEntersInvalidUsernameToSignUpField(List<InvalidData> invalidName) throws Throwable {
+        SignUpPage sign = new SignUpPage();
+        for (InvalidData name : invalidName) {
+            sign.fillUserName(name.getValue());
+            Assert.assertEquals(name.getError(), sign.getFieldError("username"));
+        }
+    }
+
+    @Then("^Error Message \"([^\"]*)\" is displayed$")
+    public void errorMessageIsDisplayed(String errorMessage) throws Throwable {
+        SignUpPage sign = new SignUpPage();
+        Assert.assertEquals(errorMessage, sign.getGeneralRegError());
     }
 }
