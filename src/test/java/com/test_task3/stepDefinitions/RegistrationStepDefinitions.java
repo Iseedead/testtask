@@ -47,7 +47,7 @@ public class RegistrationStepDefinitions {
         Assert.assertEquals(welcomeMessage, planPage.getGreetingMessage());
     }
 
-    @And("^User enters Invalid Password to Sign Up Field$")
+    @And("^User enters Invalid Password to Sign Up Field and sees Error$")
     public void userEntersInvalidPassToSignUpField(List<InvalidData> invalidPass) throws Throwable {
         SignUpPage sign = new SignUpPage();
         for (InvalidData pass : invalidPass) {
@@ -56,7 +56,7 @@ public class RegistrationStepDefinitions {
         }
     }
 
-    @And("^User enters Invalid Email to Sign Up Field$")
+    @And("^User enters Invalid Email to Sign Up Field and sees Error$")
     public void userEntersInvalidEmailToSignUpField(List<InvalidData> invalidMail) throws Throwable {
         SignUpPage sign = new SignUpPage();
         for (InvalidData mail : invalidMail) {
@@ -65,7 +65,7 @@ public class RegistrationStepDefinitions {
         }
     }
 
-    @When("^User enters Invalid Username to Sign Up Field$")
+    @When("^User enters Invalid Username to Sign Up Field and sees Error$")
     public void userEntersInvalidUsernameToSignUpField(List<InvalidData> invalidName) throws Throwable {
         SignUpPage sign = new SignUpPage();
         for (InvalidData name : invalidName) {

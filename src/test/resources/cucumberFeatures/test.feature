@@ -4,17 +4,17 @@ Feature: GitHub SignUp
         Given User is on Sign Up page
 
     Scenario: Sign Up with Invalid Data
-        When User enters Invalid Username to Sign Up Field
+        When User enters Invalid Username to Sign Up Field and sees Error
             | value    | error                                                                                                      |
             | _asd     | Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen |
             | iseedead | Username is already taken                                                                                  |
-        And User enters Invalid Email to Sign Up Field
+        And User enters Invalid Email to Sign Up Field and sees Error
             | value      | error                             |
             | asd1       | Email is invalid or already taken |
             | asd@asd.   | Email is invalid or already taken |
             | @@@@@@     | Email is invalid or already taken |
             | @gmail.com | Email is invalid or already taken |
-        And User enters Invalid Password to Sign Up Field
+        And User enters Invalid Password to Sign Up Field and sees Error
             | value     | error                                                                         |
             | asd1      | Password is too short (minimum is 7 characters)                               |
             | asdasdasd | Password needs at least one number                                            |

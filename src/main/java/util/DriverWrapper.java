@@ -17,7 +17,7 @@ public class DriverWrapper {
         String driverPath;
         URI path = null;
         File file;
-        switch (System.getProperty("os.name")) {
+        switch (System.getProperty("os.name").split(" ")[0]) {
             case "Linux":
                 try {
                     path = DriverWrapper.class.getResource("/drivers/linux/" + browserName + "driver").toURI();
