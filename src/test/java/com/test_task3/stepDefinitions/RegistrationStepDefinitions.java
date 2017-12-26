@@ -17,7 +17,6 @@ public class RegistrationStepDefinitions {
     @When("^User navigates to Sign Up Page$")
     public void userNavigatesToSignUpPage() throws Throwable {
         getDriver().get("https://github.com/join");
-        getDriver().manage().window().maximize();
         Assert.assertEquals(getDriver().getCurrentUrl(), "https://github.com/join");
     }
 

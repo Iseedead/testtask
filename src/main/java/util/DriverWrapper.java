@@ -2,7 +2,9 @@ package util;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 import java.net.URI;
@@ -12,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class DriverWrapper {
     private static WebDriver driver;
 
-    private static void initDriver() {
+    private static void switchDriver() {
         String browserName = System.getProperty("browser");
         String driverPath;
         URI path = null;
@@ -49,13 +51,16 @@ public class DriverWrapper {
             case "gecko":
                 driver = new FirefoxDriver();
                 break;
+            case "edge":
+                driver = new EdgeDriver();
+                break;
         }
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
     public static WebDriver getDriver() {
         if (driver == null) {
-            initDriver();
+            switchDriver();
         }
         return driver;
     }
