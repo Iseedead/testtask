@@ -22,10 +22,10 @@ Feature: GitHub SignUp
             | ________  | Password needs at least one lowercase letter and needs at least one number    |
             | ________1 | Password needs at least one lowercase letter                                  |
         And Press the Create an account button
-    Then Error Message "There were problems creating your account." is displayed
+        Then Error Message "There were problems creating your account." is displayed
 
-  Scenario: Sign Up with Valid Data
-    When User enters Valid Data to Sign Up Fields
-    And Press the Create an account button
-    Then Welcome Message "Welcome to GitHub" is Displayed
+    Scenario: Sign Up with Valid Data
+        When User enters Valid Data to Sign Up Fields
+        And Press the Create an account button
+        Then Welcome Message "Welcome to GitHub" is Displayed
 

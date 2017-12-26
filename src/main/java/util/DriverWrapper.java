@@ -3,8 +3,9 @@ package util;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -18,11 +19,12 @@ import java.util.concurrent.TimeUnit;
 public class DriverWrapper {
     private static WebDriver driver;
 
-    public static WebDriver getDriver() {
+    public static synchronized WebDriver getDriver() {
         if (driver == null) {
             driver = switchDriver();
         }
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
         return driver;
     }
 
@@ -85,9 +87,13 @@ public class DriverWrapper {
             case "gecko":
                 driver = new FirefoxDriver();
                 break;
-            case "edge":
-                driver = new EdgeDriver();
-                break;
+            case "opera":
+                OperaOptions options = new OperaOptions();
+                options.setBinary("/usr/bin/opera");
+                driver = new OperaDriver(options);
+//            case "edge":
+//                driver = new EdgeDriver();
+//                break;
         }
         return driver;
     }
