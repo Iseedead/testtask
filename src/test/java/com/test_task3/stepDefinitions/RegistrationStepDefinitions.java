@@ -30,13 +30,9 @@ public class RegistrationStepDefinitions {
     @When("^User enters Valid Data to Sign Up Fields$")
     public void userEntersValidDataToSignUpFields() throws Throwable {
         SignUpPage sign = new SignUpPage();
-        Thread.sleep(3000);
         sign.fillUserName(getRandomString());
-        Thread.sleep(3000);
         sign.fillEmail(getRandomString() + "@gmail.com");
-        Thread.sleep(3000);
         sign.fillPassword(getRandomString());
-        Thread.sleep(3000);
     }
 
     @And("^Press the Create an account button$")
