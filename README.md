@@ -1,4 +1,4 @@
 ### Run
 ```
-mvn -Dbrowser=chrome/gecko -Dmobile=false/true clean install
+mvn -Dbrowser=chrome/gecko/opera -Dmobile=false/true clean install
 ```
