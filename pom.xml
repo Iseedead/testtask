@@ -23,6 +23,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <browser>${browser}</browser>
+                        <mobile>${mobile}</mobile>
                         <buildDirectory>${project.build.directory}</buildDirectory>
                     </systemPropertyVariables>
                 </configuration>
@@ -38,6 +39,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <browser>chrome</browser>
+        <mobile>false</mobile>
     </properties>
 
     <dependencies>
@@ -73,6 +75,12 @@
             <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
-        
+        <!-- https://mvnrepository.com/artifact/io.appium/java-client -->
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+
     </dependencies>
 </project>

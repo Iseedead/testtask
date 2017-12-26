@@ -3,7 +3,6 @@ package com.test_task3;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import util.Base;
 
@@ -55,6 +54,7 @@ public class SignUpPage extends Base {
     }
 
     public String getGeneralRegError() {
+        sleep(1000);
         return generalRegError.getText();
     }
 }
