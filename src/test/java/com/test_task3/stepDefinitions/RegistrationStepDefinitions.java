@@ -14,12 +14,6 @@ import static util.DriverWrapper.getDriver;
 import static util.RandomGenerator.getRandomString;
 
 public class RegistrationStepDefinitions {
-    @When("^User navigates to Sign Up Page$")
-    public void userNavigatesToSignUpPage() throws Throwable {
-        getDriver().get("https://github.com/join");
-        Assert.assertEquals(getDriver().getCurrentUrl(), "https://github.com/join");
-    }
-
     @Given("^User is on Sign Up page$")
     public void userIsOnSignUpPage() throws Throwable {
         getDriver().get("https://github.com/join");
