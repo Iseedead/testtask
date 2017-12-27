@@ -18,43 +18,57 @@ import java.util.concurrent.TimeUnit;
 
 public class DriverWrapper {
     private static WebDriver driver;
+    private static String osName = System.getProperty("os.name").toLowerCase().split(" ")[0];
+    private static String osArch = System.getProperty("os.arch").toLowerCase();
+    private static URI path = null;
+    private static File file;
 
     public static synchronized WebDriver getDriver() {
         if (driver == null) {
             driver = switchDriver();
         }
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
         return driver;
     }
 
     private static WebDriver switchDriver() {
         driver = null;
+        String browserName = System.getProperty("browser");
         if (System.getProperty("mobile").equals("false")) {
-            String browserName = System.getProperty("browser");
-            String driverPath;
-            URI path = null;
-            File file;
-            switch (System.getProperty("os.name").split(" ")[0]) {
-                case "Linux":
+            switch (osName) {
+                case "linux":
                     try {
                         path = DriverWrapper.class.getResource("/drivers/linux/" + browserName + "driver").toURI();
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
                     break;
-                case "Windows":
-                    try {
-                        path = DriverWrapper.class.getResource("/drivers/windows/" + browserName + "driver.exe").toURI();
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
+                case "windows":
+                    switch (osArch.substring(osArch.length() - 2)) {
+                        case "64":
+                            try {
+                                path = DriverWrapper.class
+                                        .getResource("/drivers/windows/64/" + browserName + "driver.exe")
+                                        .toURI();
+                            } catch (URISyntaxException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "32":
+                            try {
+                                path = DriverWrapper.class
+                                        .getResource("/drivers/windows/32/" + browserName + "driver.exe")
+                                        .toURI();
+                            } catch (URISyntaxException e) {
+                                e.printStackTrace();
+                            }
+                            break;
                     }
                     break;
             }
             file = new File(path);
-            driverPath = file.getPath();
             file.setExecutable(true, false);
-            System.setProperty("webdriver." + browserName + ".driver", driverPath);
+            System.setProperty("webdriver." + browserName + ".driver", file.getPath());
 
             driver = getBrowser(browserName);
         } else {
@@ -89,7 +103,14 @@ public class DriverWrapper {
                 break;
             case "opera":
                 OperaOptions options = new OperaOptions();
-                options.setBinary("/usr/bin/opera");
+                switch (osName) {
+                    case "windows":
+                        options.setBinary("C:\\Program Files\\Opera\\launcher.exe");
+                        break;
+                    case "linux":
+                        options.setBinary("/usr/bin/opera");
+                        break;
+                }
                 driver = new OperaDriver(options);
 //            case "edge":
 //                driver = new EdgeDriver();
