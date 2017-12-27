@@ -18,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 
 public class DriverWrapper {
     private static WebDriver driver;
+    private static String androidDevice = "m3 note L681H";
+    private static String androidVersion = "5.1";
     private static String osName = System.getProperty("os.name").toLowerCase().split(" ")[0];
     private static String osArch = System.getProperty("os.arch").toLowerCase();
     private static URI path = null;
@@ -74,8 +76,8 @@ public class DriverWrapper {
         } else {
             DesiredCapabilities capabilities = new DesiredCapabilities();
 
-            capabilities.setCapability("deviceName", "m3 note L681H");
-            capabilities.setCapability("platformVersion", "5.1");
+            capabilities.setCapability("deviceName", androidDevice);
+            capabilities.setCapability("platformVersion", androidVersion);
             capabilities.setCapability("platformName", "Android");
             capabilities.setCapability("clearSystemFiles", "true");
             capabilities.setCapability("fullReset", "false");
