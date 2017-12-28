@@ -3,6 +3,7 @@ package util;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.opera.OperaOptions;
@@ -10,6 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -22,6 +24,7 @@ public class DriverWrapper {
     private static String androidVersion = "5.1";
     private static String osName = System.getProperty("os.name").toLowerCase().split(" ")[0];
     private static String osArch = System.getProperty("os.arch").toLowerCase();
+    private static String browserName = System.getProperty("browser");
     private static URI path = null;
     private static File file;
 
@@ -35,7 +38,6 @@ public class DriverWrapper {
 
     private static WebDriver switchDriver() {
         driver = null;
-        String browserName = System.getProperty("browser");
         if (System.getProperty("mobile").equals("false")) {
             switch (osName) {
                 case "linux":
@@ -114,6 +116,7 @@ public class DriverWrapper {
                         break;
                 }
                 driver = new OperaDriver(options);
+                break;
 //            case "edge":
 //                driver = new EdgeDriver();
 //                break;
@@ -122,6 +125,13 @@ public class DriverWrapper {
     }
 
     public static void nullDriver() {
+        if (browserName.equals("opera")) {
+            try {
+                Runtime.getRuntime().exec("taskkill /f /im opera.exe");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         driver.quit();
     }
 }

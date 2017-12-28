@@ -1,24 +1,23 @@
 package com.test_task3;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import util.Base;
 
-import static util.DriverWrapper.getDriver;
-
 public class SignUpPage extends Base {
-    @FindBy(xpath = "//input[@id='user_login']")
+    @FindBy(css = "input#user_login")
     private WebElement userNameField;
-    @FindBy(xpath = "//input[@id='user_email']")
+    @FindBy(css = "input#user_email")
     private WebElement emailField;
-    @FindBy(xpath = "//input[@id='user_password']")
+    @FindBy(css = "input#user_password")
     private WebElement passField;
-    @FindBy(xpath = "//button[@id='signup_button']")
+    @FindBy(css = "button#signup_button")
     private WebElement singUpButton;
-    @FindBy(xpath = "//div[contains(@class, 'my-3')]")
+    @FindBy(css = "div[class*=my-3]")
     private WebElement generalRegError;
+
+    private By fieldError = By.cssSelector("dd.error");
 
     public void fillUserName(String username) {
         userNameField.clear();
@@ -36,25 +35,22 @@ public class SignUpPage extends Base {
     }
 
     public void signUp() {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        js.executeScript("scroll(0, 250);");
-        singUpButton.click();
+        jsClick(singUpButton);
     }
 
     public String getFieldError(String field) {
         switch (field) {
             case "username":
-                return userNameField.findElement(By.xpath("../../dd[@class='error']")).getText();
+                return getElementGrandParent(userNameField).findElement(fieldError).getText();
             case "email":
-                return emailField.findElement(By.xpath("../../dd[@class='error']")).getText();
+                return getElementGrandParent(emailField).findElement(fieldError).getText();
             case "password":
-                return passField.findElement(By.xpath("../../dd[@class='error']")).getText();
+                return getElementGrandParent(passField).findElement(fieldError).getText();
         }
         return null;
     }
 
     public String getGeneralRegError() {
-        sleep(1000);
         return generalRegError.getText();
     }
 }

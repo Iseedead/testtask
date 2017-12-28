@@ -5,10 +5,11 @@ import org.openqa.selenium.support.FindBy;
 import util.Base;
 
 public class PlanPage extends Base {
-    @FindBy(xpath = "//div[contains(@class, 'setup-header')]/h1")
+    @FindBy(css = "div[class*=setup-header] > h1")
     private WebElement greetingMessage;
 
     public String getGreetingMessage() {
+        sleep(1000);
         return greetingMessage.getText();
     }
 }
